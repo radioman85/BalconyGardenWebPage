@@ -1,0 +1,34 @@
+﻿@page
+@model IndexModel
+@{
+    ViewData["Title"] = "Home page";
+}
+
+<div class="text-center">
+    <h1 class="display-4">Balkon Garten Center - Gewächshäuslefenster</h1>
+
+    <div class="d-inline-flex w-100">
+        <button class="flex-grow-1 py-3" onclick="sendMqttMessage('balconygarden/greenhouse/window', 'open')">Open 100%</button>
+        <button class="flex-grow-1 py-3" onclick="sendMqttMessage('balconygarden/greenhouse/window', 'close')">Close</button>
+    </div>
+
+    <button class="w-100 py-3" onclick="sendMqttMessage('balconygarden/greenhouse/window', 'auto')">Auto</button>
+</div>
+
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.js"></script>
+
+<script>
+    function sendMqttMessage(topic, payload) {
+        var client = new Paho.MQTT.Client("localhost", 9001, "web_" + parseInt(Math.random() * 100, 10));
+        client.connect({
+            onSuccess: function () {
+                var message = new Paho.MQTT.Message(payload);
+                message.destinationName = topic;
+                client.send(message);
+                client.disconnect();
+            }
+        });
+    }
+
+</script>
