@@ -8,10 +8,10 @@
     <h1 class="display-4">Balkon Garten Center - Gewächshäuslefenster</h1>
 
     <div class="d-inline-flex w-100">
-        <button class="flex-grow-1 py-3" onclick="sendMqttMessage('balconygarden/greenhouse/window', 'open')">Open 100%</button>
-        <button class="flex-grow-1 py-3" onclick="sendMqttMessage('balconygarden/greenhouse/window', 'close')">Close</button>
+        <button id="openButton" class="flex-grow-1 py-3 button-unclicked" onclick="handleButtonClick('openButton', 'balconygarden/greenhouse/window', 'open')">Open 100%</button>
+        <button id="closeButton" class="flex-grow-1 py-3 button-unclicked" onclick="handleButtonClick('closeButton', 'balconygarden/greenhouse/window', 'close')">Close</button>
     </div>
-    <button class="w-100 py-3" onclick="sendMqttMessage('balconygarden/greenhouse/window', 'auto')">Auto</button>
+    <button id="autoButton" class="w-100 py-3 button-unclicked" onclick="handleButtonClick('autoButton', 'balconygarden/greenhouse/window', 'auto')">Auto</button>
     <div id="statusDisplay" class="mt-3">Status: N/A</div>
     <div id="modeDisplay" class="mt-3">Mode: N/A</div>
 </div>
@@ -20,35 +20,42 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.js"></script>
 
 <script>
-    function sendMqttMessage(topic, payload) {
-        var client = new Paho.MQTT.Client("localhost", 9001, "web_" + parseInt(Math.random() * 100, 10));
-        client.connect({
-            onSuccess: function () {
-                var message = new Paho.MQTT.Message(payload);
-                message.destinationName = topic;
-                client.send(message);
-                client.disconnect();
-            }
-        });
+    var mqttClient = null;
+
+    function handleButtonClick(buttonId, topic, payload) {
+        var button = document.getElementById(buttonId);
+        button.classList.remove("button-unclicked");
+        button.classList.add("button-clicked");
+
+        // Call sendMqttMessage with the topic and payload.
+        sendMqttMessage(topic, payload);
+
+        setTimeout(function () {
+            button.classList.remove("button-clicked");
+            button.classList.add("button-unclicked");
+        }, 100);
     }
 
     function sendMqttMessage(topic, payload) {
-        var client = new Paho.MQTT.Client("localhost", 9001, "web_" + parseInt(Math.random() * 100, 10));
+        // Initialize the MQTT client if it hasn't been created yet.
+        if (!mqttClient) {
+            mqttClient = new Paho.MQTT.Client("localhost", 9001, "web_" + parseInt(Math.random() * 100, 10));
 
-        // Add a callback for when messages arrive.
-        client.onMessageArrived = onMessageArrived;
+            // Add a callback for when messages arrive.
+            mqttClient.onMessageArrived = onMessageArrived;
 
-        client.connect({
-            onSuccess: function () {
-                // Subscribe to the status topic once connected.
-                client.subscribe("balconygarden/greenhouse/windowdriver");
+            // Connect and subscribe to the status topic.
+            mqttClient.connect({
+                onSuccess: function () {
+                    mqttClient.subscribe("balconygarden/greenhouse/windowdriver");
+                }
+            });
+        }
 
-                var message = new Paho.MQTT.Message(payload);
-                message.destinationName = topic;
-                client.send(message);
-                // Do not disconnect, so we can receive messages.
-            }
-        });
+        // Send the message.
+        var message = new Paho.MQTT.Message(payload);
+        message.destinationName = topic;
+        mqttClient.send(message);
     }
 
     // Callback for when messages arrive.
@@ -69,4 +76,16 @@
         }
     }
 
+    function setActiveButton(buttonId) {
+        var buttonIds = ["openButton", "closeButton", "autoButton"];
+
+        buttonIds.forEach(function (id) {
+            var button = document.getElementById(id);
+            if (id === buttonId) {
+                button.classList.add("active-button");
+            } else {
+                button.classList.remove("active-button");
+            }
+        });
+    }
 </script>

@@ -12,6 +12,22 @@ html {
   box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
+.button-clicked {
+    background-color: #007bff;
+    color: white;
+}
+
+.button-unclicked {
+    background-color: #f8f9fa;
+    color: #007bff;
+}
+
+.button-unclicked:hover {
+    background-color: #e9ecef;
+    color: #007bff;
+    cursor: pointer;
+}
+
 html {
   position: relative;
   min-height: 100%;
