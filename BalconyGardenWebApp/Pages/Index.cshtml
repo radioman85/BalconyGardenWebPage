@@ -11,8 +11,9 @@
         <button class="flex-grow-1 py-3" onclick="sendMqttMessage('balconygarden/greenhouse/window', 'open')">Open 100%</button>
         <button class="flex-grow-1 py-3" onclick="sendMqttMessage('balconygarden/greenhouse/window', 'close')">Close</button>
     </div>
-
     <button class="w-100 py-3" onclick="sendMqttMessage('balconygarden/greenhouse/window', 'auto')">Auto</button>
+    <div id="statusDisplay" class="mt-3">Status: N/A</div>
+    <div id="modeDisplay" class="mt-3">Mode: N/A</div>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js"></script>
@@ -29,6 +30,43 @@
                 client.disconnect();
             }
         });
+    }
+
+    function sendMqttMessage(topic, payload) {
+        var client = new Paho.MQTT.Client("localhost", 9001, "web_" + parseInt(Math.random() * 100, 10));
+
+        // Add a callback for when messages arrive.
+        client.onMessageArrived = onMessageArrived;
+
+        client.connect({
+            onSuccess: function () {
+                // Subscribe to the status topic once connected.
+                client.subscribe("balconygarden/greenhouse/windowdriver");
+
+                var message = new Paho.MQTT.Message(payload);
+                message.destinationName = topic;
+                client.send(message);
+                // Do not disconnect, so we can receive messages.
+            }
+        });
+    }
+
+    // Callback for when messages arrive.
+    function onMessageArrived(message) {
+        var topic = message.destinationName;
+        var payload = message.payloadString;
+
+        if (topic === "balconygarden/greenhouse/windowdriver") {
+            var json = JSON.parse(payload);
+
+            if (json.hasOwnProperty("status")) {
+                document.getElementById("statusDisplay").innerText = "Status: " + json.status;
+            }
+
+            if (json.hasOwnProperty("mode")) {
+                document.getElementById("modeDisplay").innerText = "Mode: " + json.mode;
+            }
+        }
     }
 
 </script>
