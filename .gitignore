@@ -14,7 +14,6 @@
 *.userprefs
 
 # User-specific folder
-public/
 influx-storage/
 
 # Mono auto generated files
