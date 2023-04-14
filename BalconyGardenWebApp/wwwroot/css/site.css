@@ -1,42 +1,65 @@
 html {
-  font-size: 14px;
+    font-size: 14px;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
+    html {
+        font-size: 16px;
+    }
 }
 
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .button-clicked {
     background-color: #007bff;
     color: white;
+    border-radius: 5px;
 }
 
 .button-unclicked {
     background-color: #f8f9fa;
     color: #007bff;
+    border-radius: 5px;
 }
 
-.button-unclicked:hover {
-    background-color: #e9ecef;
-    color: #007bff;
-    cursor: pointer;
-}
+    .button-unclicked:hover {
+        background-color: #e9ecef;
+        color: #007bff;
+        cursor: pointer;
+        border-radius: 5px;
+    }
 
-html {
-    position: relative;
-    min-height: 100%;
+body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
+    margin: 0;
+    padding: 0;
     background-image: url("/backGroundPicture.jpg");
     background-size: cover;
     background-repeat: no-repeat;
-    background-attachment: fixed;
+    background-position: center;
 }
 
-body {
-  margin-bottom: 60px;
+.container {
+    flex: 1;
+    padding: 1rem;
+    background-color: rgba(255, 255, 255, 0.8);
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.2);
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+}
+
+.content {
+    margin-bottom: 1rem;
+}
+
+footer {
+    background-color: #f8f9fa;
+    text-align: center;
+    padding: 1rem;
+    margin-top: auto;
 }
