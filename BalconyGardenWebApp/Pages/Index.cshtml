@@ -6,7 +6,7 @@
 }
 
 <div class="text-center">
-    <h1 class="display-4">Gewächshäuslefenster</h1>
+    <h1 class="display-4">Greenhouse Window</h1>
 
     <div class="d-inline-flex w-100">
         <button id="openButton" class="flex-grow-1 py-3 button-unclicked" onclick="handleButtonClick('openButton', 'balconygarden/greenhouse/window', 'open')">Open 100%</button>
@@ -89,4 +89,17 @@
             }
         });
     }
+
+    // Set up the MQTT client and subscribe to the topic on page load.
+    window.onload = function () {
+        mqttClient = new Paho.MQTT.Client("localhost", 9001, "web_" + parseInt(Math.random() * 100, 10));
+
+        mqttClient.onMessageArrived = onMessageArrived;
+
+        mqttClient.connect({
+            onSuccess: function () {
+                mqttClient.subscribe("balconygarden/greenhouse/windowdriver");
+            }
+        });
+    };
 </script>
