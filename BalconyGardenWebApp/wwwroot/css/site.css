@@ -8,28 +8,33 @@ html {
     }
 }
 
+@font-face {
+    font-family: 'Great Vibes';
+    src: url('/fonts/GreatVibes-Regular.ttf') format('truetype');
+}
+
 .btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
     box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
 .button-clicked {
-    background-color: #007bff;
+    background-color: #A3C4A7;
     color: white;
     border-radius: 5px;
 }
 
 .button-unclicked {
     background-color: #f8f9fa;
-    color: #007bff;
+    color: black;
     border-radius: 5px;
 }
 
-    .button-unclicked:hover {
-        background-color: #e9ecef;
-        color: #007bff;
-        cursor: pointer;
-        border-radius: 5px;
-    }
+.button-unclicked:hover {
+    background-color: #e9ecef;
+    color: #A3C4A7;
+    cursor: pointer;
+    border-radius: 5px;
+}
 
 body {
     display: flex;
@@ -64,7 +69,12 @@ footer {
     margin-top: auto;
 }
 
-.navbar-nav .active > .nav-link {
-    background-color: #007bff !important;
-    color: #fff !important;
+.navbar-brand {
+    font-family: 'Great Vibes', cursive;
+    font-size: 32px;
+}
+
+.navbar .navbar-nav .active > .nav-link {
+    background-color: #A3C4A7;
+    color: #fff;
 }
