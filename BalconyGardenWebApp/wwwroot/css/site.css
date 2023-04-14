@@ -63,3 +63,8 @@ footer {
     padding: 1rem;
     margin-top: auto;
 }
+
+.navbar-nav .active > .nav-link {
+    background-color: #007bff !important;
+    color: #fff !important;
+}
