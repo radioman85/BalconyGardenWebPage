@@ -15,6 +15,12 @@
     <button id="autoButton" class="w-100 py-3 button-unclicked" onclick="handleButtonClick('autoButton', 'balconygarden/greenhouse/window', 'auto')">Auto</button>
     <div id="statusDisplay" class="mt-3">Status: N/A</div>
     <div id="modeDisplay" class="mt-3">Mode: N/A</div>
+
+    <div class="d-inline-flex w-100 mt-5">
+        <button id="singleStepOpenButton" class="flex-grow-1 py-3 button-unclicked" onclick="handleButtonClick('singleStepOpenButton', 'balconygarden/greenhouse/window', 'singleopen')">Single Step Open</button>
+        <button id="singleStepCloseButton" class="flex-grow-1 py-3 button-unclicked" onclick="handleButtonClick('singleStepCloseButton', 'balconygarden/greenhouse/window', 'singleclose')">Single Step Close</button>
+    </div>
+    <button id="setCloseButton" class="w-100 py-3 button-unclicked" onclick="handleButtonClick('setCloseButton', 'balconygarden/greenhouse/window', 'setclose')">Set Close</button>
 </div>
 
 <script src="https://cdnjs.cloudflare.com/ajax/libs/paho-mqtt/1.0.2/mqttws31.min.js"></script>
@@ -78,7 +84,7 @@
     }
 
     function setActiveButton(buttonId) {
-        var buttonIds = ["openButton", "closeButton", "autoButton"];
+        var buttonIds = ["openButton", "closeButton", "autoButton", "singleStepOpenButton", "singleStepCloseButton", "setCloseButton"];
 
         buttonIds.forEach(function (id) {
             var button = document.getElementById(id);
