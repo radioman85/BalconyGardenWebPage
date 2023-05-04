@@ -1,0 +1,10 @@
+version: "3.8"
+
+services:
+  greenhouse-web-app:
+    build:
+      context: ./public
+      dockerfile: Dockerfile
+    container_name: greenhouse-web-app
+    ports:
+      - "8080:80"
