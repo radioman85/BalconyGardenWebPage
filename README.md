@@ -13,7 +13,7 @@ This repositories containes the web page source files/project. It containes the 
 
 Restart the docker container, which is part of the cloud services described here: [BalconyGardenCloudServices](https://github.com/radioman85/BalconyGardenCloudServices)
 
-For point 3 to 5 you can simply use the provides python script. Make sure you update the script adding the credentials or your own docker hub.
+For point 3 to 5 you can simply use the provides python script. Make sure you update the script adding the credentials of your own docker hub.
 
 ```
 python webPageDockerImageDeploymentScript.py
